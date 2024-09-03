@@ -6,20 +6,24 @@ import { loadCart } from "../data/cart.js";
 //import "../data/backend-practice.js";
 
 async function loadPage() {
+  try {
+    //throw "error1";
 
+    await loadProductsFetch();
 
-  await loadProductsFetch();
-
-  const value = await new Promise((resolve) => {
-    loadCart(() => {
-      resolve("value");
+    const value = await new Promise((resolve, reject) => {
+      //throw "error2"; manualy create sync error
+      loadCart(() => {
+        //reject("error3"); manualy create async error
+        resolve("value");
+      });
     });
-  });
+  } catch (error) {
+    console.log("unexpected error. please try again later");
+  }
 
-    renderOrderSummary();
+  renderOrderSummary();
   renderPaymentsummary();
-
- 
 }
 loadPage();
 /*
